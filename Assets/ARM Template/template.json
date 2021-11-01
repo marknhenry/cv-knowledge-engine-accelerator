@@ -101,13 +101,27 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
-            "name": "[variables('hostingPlanName')]",
+            // "name": "[variables('hostingPlanName')]",
+            "name": "[toLower(concat(variables('hostingPlanName'), '-1'))]",
             "location": "[parameters('location')]",
             "sku": {
                 "name": "[parameters('hostingPlanSku')]"
             },
             "properties": {
-                "name": "[variables('hostingPlanName')]"
+                "name": "[toLower(concat(variables('hostingPlanName'), '-1'))]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            // "name": "[variables('hostingPlanName')]",
+            "name": "[toLower(concat(variables('hostingPlanName'), '-2'))]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('hostingPlanSku')]"
+            },
+            "properties": {
+                "name": "[toLower(concat(variables('hostingPlanName'), '-2'))]"
             }
         },
         {
@@ -159,7 +173,8 @@
             "name": "[concat(variables('functionAppName'), '-1')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'), '-1')]"
             ],
             "kind": "functionapp",
             "properties": {
@@ -199,7 +214,8 @@
             "name": "[concat(variables('functionAppName'), '-2')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'), '-2')]"
             ],
             "kind": "functionapp",
             "properties": {
