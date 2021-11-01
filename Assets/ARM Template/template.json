@@ -102,6 +102,19 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
             // "name": "[variables('hostingPlanName')]",
+            "name": "[toLower(concat(variables('hostingPlanName')))]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('hostingPlanSku')]"
+            },
+            "properties": {
+                "name": "[toLower(concat(variables('hostingPlanName')))]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            // "name": "[variables('hostingPlanName')]",
             "name": "[toLower(concat(variables('hostingPlanName'), '-1'))]",
             "location": "[parameters('location')]",
             "sku": {
